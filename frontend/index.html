@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>ClimAI - Assistant Météo Intelligent | NASA Space Apps Challenge</title>
+    <meta name="description" content="ClimAI est votre assistant météo intelligent. Posez des questions en texte ou audio, obtenez des prévisions précises et exportez vos conversations en PDF. Développé pour le NASA Space Apps Challenge 2025." />
+    <meta name="keywords" content="météo, assistant IA, chatbot, prévisions météo, NASA Space Apps, ClimAI, météo intelligente" />
+    <meta name="author" content="ClimAI Team" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://climai.spaceapps.com" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://climai.spaceapps.com" />
+    <meta property="og:title" content="ClimAI - Assistant Météo Intelligent" />
+    <meta property="og:description" content="Votre assistant météo IA pour des prévisions précises. Texte, audio et export PDF." />
+    <meta property="og:image" content="https://climai.spaceapps.com/og-image.png" />
+    <meta property="og:site_name" content="ClimAI" />
+    <meta property="og:locale" content="fr_FR" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://climai.spaceapps.com" />
+    <meta property="twitter:title" content="ClimAI - Assistant Météo Intelligent" />
+    <meta property="twitter:description" content="Votre assistant météo IA pour des prévisions précises. Texte, audio et export PDF." />
+    <meta property="twitter:image" content="https://climai.spaceapps.com/og-image.png" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ClimAI",
+      "description": "Assistant météo intelligent avec support texte et audio",
+      "url": "https://climai.spaceapps.com",
+      "applicationCategory": "WeatherApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "ClimAI Team",
+        "url": "https://climai.spaceapps.com"
+      }
+    }
+    </script>
+    
+    <!-- Theme initialization script to prevent FOUC -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('climai-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        document.documentElement.classList.add(theme);
+        
+        // Update theme-color meta tag
+        const themeColor = theme === 'dark' ? '#1f2937' : '#2563eb';
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute('content', themeColor);
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-dvh transition-colors duration-300">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
