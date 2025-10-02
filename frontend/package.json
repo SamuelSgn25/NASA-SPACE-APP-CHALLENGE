@@ -7,10 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gemini:test": "node scripts/gemini_test.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "@google/generative-ai": "^0.21.0",
+    "@google/genai": "^1.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwindcss": "^4.1.13",
@@ -27,4 +30,23 @@
     "globals": "^16.4.0",
     "vite": "^7.1.7"
   }
+  ,
+  "keywords": [
+    "ClimAI",
+    "weather",
+    "gemini",
+    "nasa",
+    "vite",
+    "react"
+  ],
+  "gemini": {
+    "model": "gemini-2.5-flash"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "directories": {
+    "scripts": "scripts"
+  },
+  "overrides": {}
 }

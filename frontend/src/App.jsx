@@ -7,6 +7,7 @@ import { Sidebar } from './components/Sidebar'
 import { Suggestions } from './components/Suggestions'
 import { useAudioRecorder } from './hooks/useAudioRecorder'
 import { exportChatToPDF } from './utils/pdfExport'
+import { generateWeatherAnswer } from './utils/geminiClient'
 
 function App() {
   const [messages, setMessages] = useState([
@@ -39,18 +40,25 @@ function App() {
     
     setMessages(prev => [...prev, userMessage])
     setIsLoading(true)
-    
-    // Simulate API call delay
-    setTimeout(() => {
+    try {
+      const aiText = await generateWeatherAnswer(content.trim())
       const assistantMessage = {
         role: 'assistant',
-        content: `Merci pour votre question : "${content.trim()}". Je vais analyser les données météo pour vous fournir une réponse précise. (Réponse simulée - en attente de l'intégration API)`,
+        content: aiText || 'Je n’ai pas pu générer de réponse pour le moment.',
         timestamp: new Date()
       }
-      
       setMessages(prev => [...prev, assistantMessage])
+    } catch (error) {
+      console.error('Gemini error:', error)
+      const assistantMessage = {
+        role: 'assistant',
+        content: "Une erreur est survenue lors de l'appel à l'IA. Vérifiez votre clé API.",
+        timestamp: new Date()
+      }
+      setMessages(prev => [...prev, assistantMessage])
+    } finally {
       setIsLoading(false)
-    }, 1500)
+    }
   }
 
   const handleAudioRecord = () => {
@@ -123,10 +131,6 @@ function App() {
             </div>
             
             <div className="flex items-center gap-2">
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full">
-                <div className="h-2 w-2 rounded-full bg-green-400 dark:bg-green-500 animate-pulse"></div>
-                <span className="text-xs text-gray-600 dark:text-gray-300 font-medium">En ligne</span>
-              </div>
               <ThemeToggle />
             </div>
           </div>
