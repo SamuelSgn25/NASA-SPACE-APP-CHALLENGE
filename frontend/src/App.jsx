@@ -11,48 +11,48 @@ import { generateWeatherAnswer } from './utils/geminiClient'
 
 function App() {
   const [messages, setMessages] = useState([
-    { 
-      role: 'assistant', 
-      content: 'Bonjour, je m\'appelle ClimAI et je suis votre nouvelle assistant météo. Que puis-je faire pour vous ?',
+    {
+      role: 'assistant',
+      content: 'Greetings, I am SpaceBot, your cosmic companion. How may I assist you on your journey through the stars?',
       timestamp: new Date()
     },
   ])
   const [isLoading, setIsLoading] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  
-  const { 
-    isRecording, 
-    audioURL, 
-    audioBlob, 
-    startRecording, 
-    stopRecording, 
-    clearRecording 
+
+  const {
+    isRecording,
+    audioURL,
+    audioBlob,
+    startRecording,
+    stopRecording,
+    clearRecording
   } = useAudioRecorder()
 
   const handleSendMessage = async (content) => {
     if (!content.trim()) return
-    
+
     const userMessage = {
       role: 'user',
       content: content.trim(),
       timestamp: new Date()
     }
-    
+
     setMessages(prev => [...prev, userMessage])
     setIsLoading(true)
     try {
       const aiText = await generateWeatherAnswer(content.trim())
       const assistantMessage = {
         role: 'assistant',
-        content: aiText || 'Je n’ai pas pu générer de réponse pour le moment.',
+        content: aiText || 'I could not generate a response at this time.',
         timestamp: new Date()
       }
       setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
-      console.error('Gemini error:', error)
+      console.error('AI error:', error)
       const assistantMessage = {
         role: 'assistant',
-        content: "Une erreur est survenue lors de l'appel à l'IA. Vérifiez votre clé API.",
+        content: "An error occurred. Please check your connection to the cosmic network.",
         timestamp: new Date()
       }
       setMessages(prev => [...prev, assistantMessage])
@@ -73,16 +73,16 @@ function App() {
     try {
       await exportChatToPDF(messages)
     } catch (error) {
-      console.error('Erreur lors de l\'export PDF:', error)
-      alert('Erreur lors de l\'export PDF. Veuillez réessayer.')
+      console.error('Export error:', error)
+      alert('Export failed. Please try again.')
     }
   }
 
   const handleNewChat = () => {
     setMessages([
-      { 
-        role: 'assistant', 
-        content: 'Bonjour, je m\'appelle ClimAI et je suis votre nouvelle assistant météo. Que puis-je faire pour vous ?',
+      {
+        role: 'assistant',
+        content: 'Greetings, I am SpaceBot, your cosmic companion. How may I assist you on your journey through the stars?',
         timestamp: new Date()
       },
     ])
@@ -97,71 +97,82 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen flex bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 transition-colors duration-300">
+      <div className="min-h-screen flex bg-gradient-to-br from-slate-900 via-indigo-950 to-black dark:from-black dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 relative overflow-hidden">
+        {/* Space background effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="stars"></div>
+          <div className="stars2"></div>
+          <div className="stars3"></div>
+        </div>
+
         {/* Sidebar */}
-        <Sidebar 
+        <Sidebar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           onNewChat={handleNewChat}
           onExportPDF={handleExportPDF}
           hasMessages={messages.length > 1}
         />
-        
+
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
           {/* Top Bar */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200/60 dark:border-gray-700/60 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
+          <div className="flex items-center justify-between p-4 border-b border-indigo-500/20 bg-slate-900/80 backdrop-blur-xl relative z-10">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 lg:hidden"
+              className="p-2 rounded-xl hover:bg-indigo-500/20 transition-colors duration-200 lg:hidden"
             >
-              <svg className="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            
+
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 shadow-lg shadow-blue-500/25 dark:shadow-blue-400/25 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">C</span>
+              <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-lg shadow-indigo-500/50 flex items-center justify-center animate-pulse-slow">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">ClimAI</h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Assistant météo intelligent</p>
+                <h1 className="text-xl font-bold text-indigo-100">SpaceBot</h1>
+                <p className="text-xs text-indigo-300">Cosmic Companion</p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               <ThemeToggle />
             </div>
           </div>
-          
+
           {/* Chat Area */}
-          <main className="flex-1 flex flex-col">
+          <main className="flex-1 flex flex-col relative z-10">
             {showWelcome ? (
               <div className="flex-1 flex items-center justify-center p-8">
                 <div className="max-w-4xl w-full space-y-8">
                   {/* Welcome Message */}
                   <div className="text-center space-y-6">
-                    <div className="inline-flex items-center gap-4 px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200/60 dark:border-gray-700/60 rounded-3xl shadow-2xl shadow-blue-500/10 dark:shadow-blue-400/10 animate-float">
-                      <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 shadow-lg shadow-blue-500/25 dark:shadow-blue-400/25 flex items-center justify-center">
-                        <span className="text-white font-bold text-2xl">C</span>
+                    <div className="inline-flex items-center gap-4 px-8 py-4 bg-slate-900/60 backdrop-blur-xl border border-indigo-500/30 rounded-3xl shadow-2xl shadow-indigo-500/20 animate-float">
+                      <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-lg shadow-indigo-500/50 flex items-center justify-center animate-pulse-slow">
+                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                        </svg>
                       </div>
                       <div className="text-left">
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
-                          ClimAI
+                        <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
+                          SpaceBot
                         </h1>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 font-medium">Assistant météo intelligent</p>
+                        <p className="text-sm text-indigo-300 font-medium">Cosmic Companion</p>
                       </div>
                     </div>
-                    
-                    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200/60 dark:border-gray-700/60 rounded-3xl p-8 shadow-2xl shadow-gray-200/50 dark:shadow-gray-800/50">
-                      <p className="text-gray-700 dark:text-gray-200 leading-relaxed text-lg">
-                        Bonjour, je m'appelle <span className="font-semibold text-blue-600 dark:text-blue-400">ClimAI</span> et je suis votre nouvelle assistant météo. 
-                        Que puis-je faire pour vous ?
+
+                    <div className="bg-slate-900/60 backdrop-blur-xl border border-indigo-500/30 rounded-3xl p-8 shadow-2xl shadow-indigo-900/50">
+                      <p className="text-indigo-100 leading-relaxed text-lg">
+                        Greetings, I am <span className="font-semibold text-indigo-300">SpaceBot</span>, your cosmic companion.
+                        How may I assist you on your journey through the stars?
                       </p>
                     </div>
                   </div>
-                  
+
                   {/* Suggestions */}
                   <Suggestions onSuggestionClick={handleSuggestionClick} />
                 </div>
@@ -169,8 +180,8 @@ function App() {
             ) : (
               <ChatContainer messages={messages} isLoading={isLoading} />
             )}
-            
-            <ChatInput 
+
+            <ChatInput
               onSend={handleSendMessage}
               onAudioRecord={handleAudioRecord}
               isRecording={isRecording}
