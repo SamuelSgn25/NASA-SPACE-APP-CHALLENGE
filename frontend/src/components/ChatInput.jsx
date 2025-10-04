@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react'
 export function ChatInput({ onSend, onAudioRecord, isRecording, disabled, onExportPDF, hasMessages }) {
   const [input, setInput] = useState('')
   const textareaRef = useRef(null)
-  
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (input.trim() && !disabled) {
@@ -14,25 +14,24 @@ export function ChatInput({ onSend, onAudioRecord, isRecording, disabled, onExpo
       }
     }
   }
-  
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(e)
     }
   }
-  
+
   const handleInputChange = (e) => {
     setInput(e.target.value)
     const textarea = e.target
     textarea.style.height = 'auto'
     textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px'
   }
-  
+
   return (
-    <div className="sticky bottom-0 bg-gradient-to-t from-white/95 via-white/90 to-transparent dark:from-gray-900/95 dark:via-gray-900/90 backdrop-blur-xl p-6 transition-colors duration-300">
+    <div className="sticky bottom-0 bg-gradient-to-t from-slate-900/95 via-slate-900/90 to-transparent backdrop-blur-xl p-6 transition-colors duration-300 relative z-10">
       <div className="max-w-4xl mx-auto">
-        {/* Input Form */}
         <form onSubmit={handleSubmit}>
           <div className="flex items-end gap-4">
             <div className="flex-1 relative">
@@ -41,9 +40,9 @@ export function ChatInput({ onSend, onAudioRecord, isRecording, disabled, onExpo
                 value={input}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Posez votre question météo..."
+                placeholder="Ask me about the cosmos..."
                 disabled={disabled}
-                className="w-full resize-none rounded-3xl border border-gray-200/60 dark:border-gray-700/60 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl px-6 py-4 pr-14 text-base placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:border-blue-500 dark:focus:border-blue-400 focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 transition-all duration-200 min-h-[56px] max-h-[140px] shadow-lg shadow-gray-200/50 dark:shadow-gray-800/50"
+                className="w-full resize-none rounded-3xl border border-indigo-500/30 bg-slate-900/60 backdrop-blur-xl px-6 py-4 pr-14 text-base placeholder-indigo-400/60 text-indigo-100 focus:border-indigo-400 focus:bg-slate-900/80 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 transition-all duration-200 min-h-[56px] max-h-[140px] shadow-lg shadow-indigo-900/50"
                 rows="1"
               />
               <button
@@ -52,8 +51,8 @@ export function ChatInput({ onSend, onAudioRecord, isRecording, disabled, onExpo
                 disabled={disabled}
                 className={`absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-2xl transition-all duration-200 ${
                   isRecording
-                    ? 'bg-red-500 dark:bg-red-400 text-white shadow-lg shadow-red-500/25 dark:shadow-red-400/25 animate-pulse'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-gray-700 dark:hover:text-gray-200'
+                    ? 'bg-pink-500 text-white shadow-lg shadow-pink-500/50 animate-pulse'
+                    : 'bg-indigo-900/60 text-indigo-300 hover:bg-indigo-800/60 hover:text-indigo-200'
                 } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {isRecording ? (
@@ -67,13 +66,13 @@ export function ChatInput({ onSend, onAudioRecord, isRecording, disabled, onExpo
                 )}
               </button>
             </div>
-            
+
             <button
               type="submit"
               disabled={!input.trim() || disabled}
-              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 text-white rounded-3xl font-medium text-base shadow-lg shadow-blue-500/25 dark:shadow-blue-400/25 hover:shadow-blue-500/40 dark:hover:shadow-blue-400/40 hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-blue-500/25 dark:disabled:hover:shadow-blue-400/25"
+              className="px-8 py-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-3xl font-medium text-base shadow-lg shadow-indigo-500/50 hover:shadow-indigo-500/70 hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-indigo-500/50"
             >
-              Envoyer
+              Send
             </button>
           </div>
         </form>
